@@ -54,6 +54,10 @@ with open("fileA.txt", "r") as fileA:
 
 # чтение файла В для проверки
 with open("fileB.txt", "r") as fileB:
+    print(fileB.read() + "\n")
+
+
+with open("fileB.txt", "r") as fileB:
     # поиск самого длинного слова
     longer_word = ''
     for line in fileB.readlines():
