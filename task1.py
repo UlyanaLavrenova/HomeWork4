@@ -40,31 +40,42 @@ a = 'А я не знал, что я расту\n\
 with open("fileA.txt", "w") as fileA:
     fileA.write(a)
 
-# открытие файла А в режиме чтения
-with open("fileA.txt", "r") as fileA:
-    # открытие файла В в режиме записи
-    with open("fileB.txt", "w") as fileB:
-        # построчное чтение файла А
-        for line in fileA.readlines():
-            # если в строке файла А не встречаются пробелы, что значит, что там одно слово,
-            # то эта строка записывается в файл В
-            if line.count(' ') == 0:
-                fileB.write(line)
+
+try:
+    # открытие файла А в режиме чтения
+    with open("fileA.txt", "r") as fileA:
+        # открытие файла В в режиме записи
+        with open("fileB.txt", "w") as fileB:
+            # построчное чтение файла А
+            for line in fileA.readlines():
+                # если в строке файла А не встречаются пробелы, что значит, что там одно слово,
+                # то эта строка записывается в файл В
+                if line.count(' ') == 0:
+                    fileB.write(line)
+except FileNotFoundError:
+    print("Файл A не найден")
 
 
-# чтение файла В для проверки
-with open("fileB.txt", "r") as fileB:
-    print(fileB.read() + "\n")
+try:
+    # чтение файла В для проверки
+    with open("fileB.txt", "r") as fileB:
+        print("Содержимое файла В:")
+        print(fileB.read() + "\n")
+except FileNotFoundError:
+    print("Файл В не найден")
 
 
-# поиск самого длинного слова
-with open("fileB.txt", "r") as fileB:
-    longer_word = ''
-    for line in fileB.readlines():
-        new_line = ''
-        for symbol in [',', '.', '!', '?', '\n', ':']:
-            if symbol in line:
-                new_line = line.replace(symbol, '')
-        if len(new_line) > len(longer_word):
-            longer_word = new_line
-    print("Саммое длинное слово в файле В - '" + longer_word + "'")
+try:
+    # поиск самого длинного слова
+    with open("fileB.txt", "r") as fileB:
+        longer_word = ''
+        for line in fileB.readlines():
+            new_line = ''
+            for symbol in [',', '.', '!', '?', '\n', ':']:
+                if symbol in line:
+                    new_line = line.replace(symbol, '')
+            if len(new_line) > len(longer_word):
+                longer_word = new_line
+        print("Саммое длинное слово в файле В - '" + longer_word + "'")
+except FileNotFoundError:
+    print("Файл В не найден")
