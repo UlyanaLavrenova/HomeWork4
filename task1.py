@@ -46,17 +46,21 @@ with open("fileA.txt", "r") as fileA:
     with open("fileB.txt", "w") as fileB:
         # построчное чтение файла А
         for line in fileA.readlines():
-            count = 0
-            # если в строчке в файле А встречается пробел, что означает, что там больше одного слова,
-            # то переменная count увеличивается на единицу
-            for i in range(int(len(line))):
-                if line[i] == ' ':
-                    count += 1
-            # если count равняется нулю - значит в строке всего одно слово
-            # и эта строка записывается в файл В
-            if count == 0:
+            # если в строке файла А не встречаются пробелы, что значит, что там одно слово,
+            # то эта строка записывается в файл В
+            if line.count(' ') == 0:
                 fileB.write(line)
+
 
 # чтение файла В для проверки
 with open("fileB.txt", "r") as fileB:
-    print(fileB.read())
+    # поиск самого длинного слова
+    longer_word = ''
+    for line in fileB.readlines():
+        new_line = ''
+        for symbol in [',', '.', '!', '?', '\n', ':']:
+            if symbol in line:
+                new_line = line.replace(symbol, '')
+        if len(new_line) > len(longer_word):
+            longer_word = new_line
+    print("Саммое длинное слово в файле В - '" + longer_word + "'")
